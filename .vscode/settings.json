@@ -1,0 +1,12 @@
+
+{
+    "cucumber.features": [
+        "features/**/*.feature"
+    ],
+
+    "cucumber.glue": [
+        "stepDefinitions/**/*.ts",
+        "hooks/**/*.ts"
+    ]
+}
+

@@ -1,0 +1,26 @@
+{
+  "default": {
+    "paths": [
+      "features/**/*.feature"
+    ],
+    "require": [
+      "./stepDefinitions/**/*.ts",
+      "./hooks/**/*.ts"
+    ],
+    "requireModule": [
+      "ts-node/register"
+    ],
+    "format": [
+      "progress",
+      "json:reports/cucumber-report.json",
+      "html:reports/cucumber-report.html"
+      
+    ],
+     "formatOptions": {
+      "resultsDir": "allure-results"
+    },
+    "publishQuiet": true,
+    "retry": 2,
+    "parallel": 5
+  }
+}
