@@ -1,4 +1,4 @@
-import { Given, When, Then } from "@cucumber/cucumber";
+import { Given, When, Then, context } from "@cucumber/cucumber";
 import {LoginPage} from '../pages/LoginPage'
 import {HomePage} from '../pages/homePage'
 import { expect } from "@playwright/test";
@@ -24,6 +24,8 @@ Then('I should be logged in to the portal successfully', async function () {
     const homepage= new HomePage(this.page)
 
     await expect(homepage.signOutBtn).toBeVisible();
+
+    
 
 
 });

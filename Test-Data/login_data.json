@@ -1,0 +1,18 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://speedwaytech.co.in",
+      "localStorage": [
+        {
+          "name": "speedwaytechAuth",
+          "value": "authenticated"
+        },
+        {
+          "name": "loggedInUser",
+          "value": "admin"
+        }
+      ]
+    }
+  ]
+}
