@@ -7,7 +7,9 @@ setDefaultTimeout(60*1000)// 60 sec
 
 Before(async function() //before exery scneario
 {
-    this.browser= await chromium.launch({headless: false});
+    const isCI = process.env.CI === 'true';
+
+    this.browser= await chromium.launch({headless: isCI});
     this.context= await this.browser.newContext();
     this.page= await this.context.newPage();
 
@@ -16,7 +18,7 @@ Before(async function() //before exery scneario
 
 After(async function()
 {
-    await this.browser.close();
+    //await this.browser.close();
 })
 
 
