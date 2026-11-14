@@ -1,52 +1,41 @@
 
-name: Playwright BDD Automation CI
+name: Playwright BDD CI
 
 on:
   push:
+    branches: [main, develop]
+
   pull_request:
-    branches:
-      - main
-      - master
-      - develop
+    branches: [main, develop]
 
 jobs:
-  playwright-tests:
+  test:
     name: Run Playwright BDD Tests
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repository
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
-      # 3. Install dependencies
       - name: Install Dependencies
         run: npm ci
 
-      # 4. Install Playwright Chromium
       - name: Install Playwright Browser
         run: npx playwright install --with-deps chromium
 
-      # 5. Execute Cucumber BDD tests
       - name: Run BDD Tests
         run: npx cucumber-js
 
-      # 6. Upload reports and test artifacts
       - name: Upload Test Reports
-        uses: actions/upload-artifact@v4
         if: always()
+        uses: actions/upload-artifact@v4
         with:
-          name: playwright-bdd-test-results
-          path: |
-            reports/
-            test-results/
-            playwright-report/
-          if-no-files-found: warn
-          retention-days: 30
+          name: cucumber-reports
+          path: reports/
+          if-no-files-found: ignore
