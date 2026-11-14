@@ -1,8 +1,9 @@
 Feature: Login Functioanlity
 
 
+  @sanity
   Scenario Outline: Valid Creds
-
+        
         Given I navigate to the url
         When I enter valid username "<email>" and valid password "<password>"
         And clicks on the login button
