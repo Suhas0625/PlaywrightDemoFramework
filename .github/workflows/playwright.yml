@@ -3,39 +3,62 @@ name: Playwright BDD CI
 
 on:
   push:
-    branches: [main, develop, master]
+    branches:
+      - master
 
   pull_request:
-    branches: [main, develop, master]
+    branches:
+      - master
+
+  workflow_dispatch:
 
 jobs:
   test:
-    name: Run Playwright BDD Tests
+    name: Execute Playwright BDD Tests
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout repository
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
+      # 3. Install dependencies
       - name: Install Dependencies
         run: npm ci
 
-      - name: Install Playwright Browser
+      # 4. Install Playwright browser
+      - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Run BDD Tests
+      # 5. Create .env file using GitHub Secret
+      - name: Create Environment File
+        env:
+          PORTAL_URL: ${{ secrets.PORTAL_URL }}
+        run: |
+          if [ -z "$PORTAL_URL" ]; then
+            echo "Error: PORTAL_URL secret is not configured"
+            exit 1
+          fi
+
+          echo "PORTAL_URL=$PORTAL_URL" > .env
+
+      # 6. Execute Cucumber tests
+      - name: Run Cucumber Tests
         run: npx cucumber-js
 
-      - name: Upload Test Reports
+      # 7. Upload test reports
+      - name: Upload Cucumber Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-reports
           path: reports/
-          if-no-files-found: ignore
+          if-no-files-found: warn
+          retention-days: 7
