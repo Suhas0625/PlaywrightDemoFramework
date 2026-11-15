@@ -51,7 +51,7 @@ jobs:
 
       # 6. Execute Cucumber tests
       - name: Run Cucumber Tests
-        run: npx cucumber-js --tags "@sanity"
+        run: npx cucumber-js 
 
       # 7. Upload test reports
       - name: Upload Cucumber Reports
